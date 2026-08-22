@@ -1,6 +1,8 @@
 /**
  * RENDERBERRY.IN — PREMIUM DIGITAL & CREATIVE STUDIO
  * Interactive Suite:
+ * - Animated Blob Gradient Canvas (4 drifting radial-gradient blobs, 'lighter' blend)
+ * - Kinetic Gradient Headline with Word Bounce-In Entrance
  * - Fluid Ambient Mouse Canvas with Constellation Physics & Color Glow
  * - Magnetic 3D Cards with Dynamic Cursor Radial Spotlight (Linear / Vercel style)
  * - Magnetic Button Attraction Physics
@@ -8,7 +10,62 @@
  * - Portfolio Case Study Drawer & Browser History API
  */
 
+/* ==========================================================================
+   BLOB GRADIENT BACKGROUND CANVAS
+   ========================================================================== */
+(function initBlobCanvas() {
+    const canvas = document.getElementById('bg');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let w, h;
+
+    function resize() {
+        w = canvas.width = window.innerWidth;
+        h = canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    const blobs = [
+        { r: 0.42, cx: 0.25, cy: 0.30, sx: 0.10, sy: 0.09, sp: 0.6,  phase: 0,   color: '#EE1580' },
+        { r: 0.36, cx: 0.75, cy: 0.25, sx: 0.09, sy: 0.11, sp: 0.5,  phase: 2.1, color: '#9B2FAE' },
+        { r: 0.30, cx: 0.55, cy: 0.75, sx: 0.08, sy: 0.08, sp: 0.45, phase: 4.2, color: '#C6F135' },
+        { r: 0.34, cx: 0.15, cy: 0.75, sx: 0.07, sy: 0.09, sp: 0.55, phase: 1.3, color: '#5B2158' }
+    ];
+
+    let t = 0;
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function draw() {
+        ctx.clearRect(0, 0, w, h);
+        ctx.globalCompositeOperation = 'lighter';
+
+        blobs.forEach(b => {
+            const cx = (b.cx + Math.sin(t * b.sp + b.phase) * b.sx) * w;
+            const cy = (b.cy + Math.cos(t * b.sp * 0.8 + b.phase) * b.sy) * h;
+            const r  = b.r * Math.max(w, h);
+            const g  = ctx.createRadialGradient(cx, cy, 0, cx, cy, r);
+            g.addColorStop(0, b.color);
+            g.addColorStop(1, 'transparent');
+            ctx.fillStyle = g;
+            ctx.beginPath();
+            ctx.arc(cx, cy, r, 0, Math.PI * 2);
+            ctx.fill();
+        });
+
+        ctx.globalCompositeOperation = 'source-over';
+
+        if (!reducedMotion) {
+            t += 0.006;
+            requestAnimationFrame(draw);
+        }
+    }
+
+    draw();
+})();
+
 document.addEventListener('DOMContentLoaded', () => {
+
 
     /* ==========================================================================
        1. Preloader
@@ -19,6 +76,28 @@ document.addEventListener('DOMContentLoaded', () => {
             loader.classList.add('hidden');
         }, 1000);
     }
+
+    /* ==========================================================================
+       2. Kinetic Word Bounce-In Entrance (headline .word elements)
+       ========================================================================== */
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    document.querySelectorAll('.word').forEach((wordEl, i) => {
+        if (reducedMotion) {
+            // Instantly reveal without animation
+            wordEl.style.opacity = '1';
+            wordEl.style.transform = 'translateY(0) scale(1)';
+        } else {
+            const delay = 200 + i * 140; // starts after loader delay
+            wordEl.style.transition = `opacity 0.95s cubic-bezier(.2,1.3,.3,1) ${delay}ms, transform 0.95s cubic-bezier(.2,1.3,.3,1) ${delay}ms`;
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    wordEl.style.opacity = '1';
+                    wordEl.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+        }
+    });
 
     /* ==========================================================================
        2. Interactive Ambient Canvas (Constellations + Mouse Aurora Glow)
@@ -92,10 +171,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
                 ctx.fillStyle = `rgba(192, 132, 252, ${Math.max(0.1, this.currentAlpha)})`;
-                ctx.shadowBlur = 8;
-                ctx.shadowColor = 'rgba(168, 85, 247, 0.4)';
                 ctx.fill();
-                ctx.shadowBlur = 0;
             }
         }
 
@@ -215,38 +291,28 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /* ==========================================================================
-       5. Custom Trailing Glow Cursor
+       5. Custom Precision Cursor (Instant, Zero-Delay, Hardware-Accelerated)
        ========================================================================== */
     const cursorDot = document.getElementById('cursor-dot');
     const cursorOutline = document.getElementById('cursor-outline');
 
     if (cursorDot && cursorOutline && window.matchMedia('(pointer: fine)').matches) {
-        let cursorX = -100;
-        let cursorY = -100;
-        let outlineX = -100;
-        let outlineY = -100;
-
         window.addEventListener('mousemove', (e) => {
-            cursorX = e.clientX;
-            cursorY = e.clientY;
-            cursorDot.style.left = `${cursorX}px`;
-            cursorDot.style.top = `${cursorY}px`;
-        });
+            const x = e.clientX;
+            const y = e.clientY;
+            // Hardware GPU accelerated translate3d with zero delay
+            const transformStr = `translate3d(${x}px, ${y}px, 0) translate(-50%, -50%)`;
+            cursorDot.style.transform = transformStr;
+            cursorOutline.style.transform = transformStr;
+        }, { passive: true });
 
-        function animateCursor() {
-            outlineX += (cursorX - outlineX) * 0.18;
-            outlineY += (cursorY - outlineY) * 0.18;
-            cursorOutline.style.left = `${outlineX}px`;
-            cursorOutline.style.top = `${outlineY}px`;
-            requestAnimationFrame(animateCursor);
-        }
-        animateCursor();
-
-        // Magnetic hover enlargement
-        const hoverTargets = document.querySelectorAll('a, button, .service-card, .portfolio-item-card, .contact-channel-card, .portfolio-filter-pill');
-        hoverTargets.forEach(el => {
-            el.addEventListener('mouseenter', () => cursorOutline.classList.add('hover-active'));
-            el.addEventListener('mouseleave', () => cursorOutline.classList.remove('hover-active'));
+        // Event delegation for dynamic hover enlargement
+        document.addEventListener('mouseover', (e) => {
+            if (e.target.closest('a, button, .service-card, .portfolio-item-card, .contact-channel-card, .portfolio-filter-pill, [data-tilt]')) {
+                cursorOutline.classList.add('hover-active');
+            } else {
+                cursorOutline.classList.remove('hover-active');
+            }
         });
     }
 

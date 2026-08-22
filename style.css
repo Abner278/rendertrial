@@ -1,16 +1,22 @@
 /* ==========================================================================
    RENDERBERRY.IN — PREMIUM MINIMALIST & EDITORIAL STYLESHEET
-   Typography: Outfit (Headings/Brand) + Plus Jakarta Sans (Body & UI)
-   Aesthetic: Clean Dark Glassmorphism, Subtle Violet Glow, Balanced Proportions
+   Typography: Unbounded (Display) + Outfit (Headings) + Plus Jakarta Sans (Body/UI)
+   Aesthetic: Dark Plum Glassmorphism, Blob Gradient BG, Kinetic Gradient Headlines
    ========================================================================== */
 
 :root {
-    /* Base Color Architecture */
-    --bg-primary: #08080c;
-    --bg-secondary: #0f0e17;
-    --bg-card: rgba(18, 16, 26, 0.72);
-    --bg-card-hover: rgba(26, 22, 38, 0.9);
-    
+    /* Base Color Architecture — Blob Palette */
+    --bg-primary: #12010F;
+    --bg-secondary: #1D0620;
+    --bg-card: rgba(29, 6, 32, 0.72);
+    --bg-card-hover: rgba(40, 10, 45, 0.9);
+
+    /* Blob Colors */
+    --blob-magenta: #EE1580;
+    --blob-plum: #9B2FAE;
+    --blob-lime: #C6F135;
+    --blob-deep-plum: #5B2158;
+
     /* Text Colors */
     --text-primary: #ffffff;
     --text-secondary: #e2e8f0;
@@ -18,28 +24,30 @@
     --text-dim: #64748b;
 
     /* Accent & Brand Highlights */
-    --accent-purple: #9333ea;
+    --accent-purple: #9B2FAE;
     --accent-purple-light: #c084fc;
-    --accent-purple-glow: rgba(147, 51, 234, 0.28);
-    --accent-magenta: #e879f9;
+    --accent-purple-glow: rgba(155, 47, 174, 0.28);
+    --accent-magenta: #EE1580;
     --accent-whatsapp: #25D366;
-    
+
     /* Borders & Accents */
     --border-subtle: rgba(255, 255, 255, 0.08);
-    --border-purple: rgba(168, 85, 247, 0.25);
-    --border-purple-hover: rgba(192, 132, 252, 0.55);
-    
+    --border-purple: rgba(155, 47, 174, 0.25);
+    --border-purple-hover: rgba(198, 241, 53, 0.35);
+
     /* Typography System */
+    --font-display: 'Unbounded', -apple-system, BlinkMacSystemFont, sans-serif;
     --font-heading: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
     --font-subheading: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-    --font-body: 'Lora', Georgia, 'Times New Roman', serif;
+    --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
     --font-ui: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'Space Mono', 'Courier New', monospace;
     --font-gtsuper: 'GT Super', 'GT Super Display', 'Lora', 'EB Garamond', Georgia, serif;
-    
+
     /* Spacing & Sizing */
     --section-padding: clamp(4.5rem, 7vw, 7.5rem);
     --container-max: 1300px;
-    
+
     /* Transitions */
     --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
     --transition-smooth: 0.35s cubic-bezier(0.16, 1, 0.3, 1);
@@ -81,35 +89,48 @@ body {
     height: 100vh;
     z-index: -2;
     pointer-events: none;
-    background: radial-gradient(circle at 50% 15%, rgba(35, 18, 62, 0.4) 0%, rgba(8, 8, 12, 0.95) 75%, #08080c 100%);
+    background: radial-gradient(circle at 50% 15%, rgba(91, 33, 88, 0.3) 0%, rgba(18, 1, 15, 0.97) 75%, #12010F 100%);
+}
+
+/* Grain Texture Overlay — adds tactile polish over the blob canvas */
+.grain-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-size: 256px 256px;
+    background-repeat: repeat;
+    mix-blend-mode: overlay;
 }
 
 /* --------------------------------------------------------------------------
-   Custom Cursor (Desktop Only)
+   Custom Cursor (Instant, Hardware-Accelerated)
    -------------------------------------------------------------------------- */
 .custom-cursor-dot, .custom-cursor-outline {
     position: fixed;
     top: 0;
     left: 0;
-    transform: translate(-50%, -50%);
     border-radius: 50%;
     pointer-events: none;
     z-index: 9999;
+    will-change: transform;
     transition: opacity 0.3s ease;
 }
 
 .custom-cursor-dot {
-    width: 5px;
-    height: 5px;
+    width: 6px;
+    height: 6px;
     background-color: var(--accent-purple-light);
     box-shadow: 0 0 8px var(--accent-purple);
 }
 
 .custom-cursor-outline {
-    width: 32px;
-    height: 32px;
-    border: 1px solid rgba(168, 85, 247, 0.4);
-    transition: transform 0.15s ease-out, width 0.2s ease, height 0.2s ease, border-color 0.2s ease;
+    width: 34px;
+    height: 34px;
+    border: 1px solid rgba(168, 85, 247, 0.45);
+    transition: opacity 0.3s ease, width 0.2s ease, height 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
 }
 
 body:hover .custom-cursor-dot, body:hover .custom-cursor-outline {
@@ -117,9 +138,9 @@ body:hover .custom-cursor-dot, body:hover .custom-cursor-outline {
 }
 
 .custom-cursor-outline.hover-active {
-    width: 48px;
-    height: 48px;
-    background-color: rgba(168, 85, 247, 0.08);
+    width: 50px;
+    height: 50px;
+    background-color: rgba(168, 85, 247, 0.12);
     border-color: var(--accent-purple-light);
 }
 
@@ -130,21 +151,119 @@ body:hover .custom-cursor-dot, body:hover .custom-cursor-outline {
 }
 
 /* --------------------------------------------------------------------------
-   Typography
+   Headline & Kinetic Gradient Typography (Unbounded Display)
    -------------------------------------------------------------------------- */
+.headline {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(2rem, 5.8vw, 5.2rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+}
+
+.headline-line {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+/* Animated gradient clipped to text — color itself moves */
+.grad-text {
+    background: linear-gradient(90deg, #EE1580, #C6F135, #9B2FAE, #EE1580);
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    animation: gradShift 7s linear infinite;
+    display: inline-block;
+}
+
+@keyframes gradShift {
+    0%   { background-position: 0% 50%; }
+    100% { background-position: 300% 50%; }
+}
+
+/* Word-level bounce-in entrance — state before animation fires */
+.word {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(120%) scale(0.9);
+    /* JS sets the transition with staggered delay */
+    will-change: opacity, transform;
+}
+
+/* Legacy gradient-text kept for contact section & other usages */
+.gradient-text {
+    background: linear-gradient(135deg, #ffffff 20%, #d8b4fe 65%, #c084fc 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+}
+
+/* Space Mono utility class for labels / eyebrows */
+.mono-label {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+}
+
+/* --------------------------------------------------------------------------
+   Consistent Section Headings & Editorial Typography
+   -------------------------------------------------------------------------- */
+.sec-num {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--blob-lime);
+    margin-bottom: 16px;
+}
+
+.sec-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    letter-spacing: -0.01em;
+    max-width: 760px;
+    color: #ffffff;
+    line-height: 1.15;
+}
+
+.sec-body {
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.75;
+    color: var(--text-muted);
+    max-width: 620px;
+    margin-top: 20px;
+}
+
+.sec-quote {
+    font-family: 'Fraunces', Georgia, serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(1.3rem, 2.4vw, 1.8rem);
+    line-height: 1.4;
+    color: #ffffff;
+    max-width: 640px;
+    margin: 28px 0;
+}
+
+.sec-quote em {
+    color: var(--blob-lime);
+    font-style: italic;
+}
+
+/* Base heading rule (kept alongside .headline for h2, h3, h4 etc.) */
 h1, h2, h3, h4, .brand-name {
     font-family: var(--font-heading);
     font-weight: 700;
     line-height: 1.2;
     letter-spacing: -0.02em;
     color: var(--text-primary);
-}
-
-.gradient-text {
-    background: linear-gradient(135deg, #ffffff 20%, #d8b4fe 65%, #c084fc 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    display: inline-block;
 }
 
 a {
@@ -513,13 +632,13 @@ p {
     justify-content: center;
     gap: 0.65rem;
     font-family: var(--font-body);
-    font-size: 0.95rem;
+    font-size: 1rem;
     font-weight: 600;
-    padding: 0.85rem 1.85rem;
-    border-radius: 100px;
+    padding: 0.92rem 2.15rem;
+    border-radius: 9999px;
     cursor: pointer;
     border: 1px solid transparent;
-    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, background 0.25s ease;
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, background 0.25s ease, border-color 0.25s ease;
     vertical-align: middle;
     line-height: 1;
     text-align: center;
@@ -537,38 +656,42 @@ p {
 
 .btn-primary-glow {
     background: #ffffff;
-    color: #08080c !important;
+    color: #12010F !important;
     font-weight: 700;
-    box-shadow: 0 0 25px rgba(255, 255, 255, 0.45), 0 4px 15px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.45), 0 4px 18px rgba(0, 0, 0, 0.35);
 }
 
 .btn-primary-glow:hover {
-    background: #f8fafc;
-    box-shadow: 0 0 35px rgba(255, 255, 255, 0.7), 0 6px 20px rgba(0, 0, 0, 0.4);
+    background: #ffffff;
+    box-shadow: 0 0 42px rgba(255, 255, 255, 0.75), 0 6px 24px rgba(0, 0, 0, 0.45);
     transform: translateY(-2px);
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, #a855f7 0%, #7e22ce 100%);
+    background: linear-gradient(135deg, #9B2FAE 0%, #5B2158 100%);
     color: #ffffff;
-    box-shadow: 0 4px 18px rgba(168, 85, 247, 0.35);
+    box-shadow: 0 4px 18px rgba(155, 47, 174, 0.35);
 }
 
 .btn-primary:hover {
-    box-shadow: 0 6px 26px rgba(168, 85, 247, 0.55);
+    box-shadow: 0 6px 26px rgba(155, 47, 174, 0.55);
     transform: translateY(-2px);
 }
 
 .btn-secondary {
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.07);
     color: #ffffff;
-    border: 1px solid var(--border-subtle);
-    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
 
 .btn-secondary:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.25);
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.45);
+    color: #ffffff;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3);
     transform: translateY(-2px);
 }
 
@@ -593,7 +716,7 @@ p {
     border-radius: 50%;
     filter: blur(110px);
     pointer-events: none;
-    z-index: -1;
+    z-index: 2;
     opacity: 0.8;
 }
 
@@ -615,6 +738,34 @@ p {
     animation: floatAurora2 14s infinite alternate ease-in-out;
 }
 
+/* Premium Video Background Integration */
+.hero-video-wrap {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.hero-video-bg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.55;
+    filter: brightness(0.6) contrast(1.1) saturate(0.95);
+    transition: opacity 0.5s ease;
+}
+
+.hero-video-overlay {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 50%, rgba(8, 8, 12, 0.1) 0%, rgba(8, 8, 12, 0.8) 85%),
+                linear-gradient(to bottom, rgba(8, 8, 12, 0.2) 0%, rgba(8, 8, 12, 0.6) 50%, var(--bg-primary) 100%);
+    z-index: 2;
+}
+
 @keyframes floatAurora1 {
     0% { transform: translate(0, 0) scale(1); }
     50% { transform: translate(-30px, 40px) scale(1.1); }
@@ -632,32 +783,33 @@ p {
     flex-direction: column;
     align-items: center;
     text-align: center;
-    max-width: 860px;
+    max-width: 1100px;
     position: relative;
-    z-index: 1;
+    z-index: 3;
 }
 
 .hero-badge {
     display: inline-flex;
     align-items: center;
     gap: 0.55rem;
-    font-size: 0.72rem;
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
     font-weight: 700;
-    letter-spacing: 0.12em;
-    color: var(--accent-purple-light);
-    background: rgba(168, 85, 247, 0.08);
-    border: 1px solid rgba(168, 85, 247, 0.25);
-    padding: 0.45rem 1.25rem;
+    letter-spacing: 0.14em;
+    color: var(--blob-lime);
+    background: rgba(198, 241, 53, 0.08);
+    border: 1px solid rgba(198, 241, 53, 0.28);
+    padding: 0.5rem 1.35rem;
     border-radius: 100px;
     margin-bottom: 2rem;
     margin-top: 0.8rem;
-    box-shadow: 0 0 15px rgba(168, 85, 247, 0.1);
+    box-shadow: 0 0 18px rgba(198, 241, 53, 0.12);
     transition: var(--transition-smooth);
 }
 
 .hero-badge:hover {
-    border-color: var(--accent-purple-light);
-    box-shadow: 0 0 25px rgba(168, 85, 247, 0.25);
+    border-color: var(--blob-lime);
+    box-shadow: 0 0 28px rgba(198, 241, 53, 0.3);
     transform: translateY(-2px);
 }
 
@@ -671,6 +823,14 @@ p {
     color: #ffffff;
     padding-bottom: 0.08em;
     -webkit-font-smoothing: antialiased;
+    overflow: hidden; /* clips the word slide-up bounce-in */
+}
+
+/* When also .headline, defer to Unbounded display font */
+.hero-title.headline {
+    font-family: var(--font-display);
+    font-weight: 900;
+    line-height: 0.98;
 }
 
 .hero-title .gradient-text {
@@ -690,12 +850,15 @@ p {
 }
 
 .hero-subtitle {
-    font-size: clamp(0.96rem, 1.4vw, 1.08rem);
-    color: var(--text-muted);
-    max-width: 640px;
+    font-family: var(--font-body);
+    font-size: clamp(1.08rem, 1.8vw, 1.3rem);
+    color: #e2e8f0;
+    max-width: 720px;
     margin: 0 auto 2.5rem;
-    font-weight: 400;
-    line-height: 1.7;
+    font-weight: 500;
+    line-height: 1.65;
+    letter-spacing: -0.01em;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
 }
 
 .hero-actions {
