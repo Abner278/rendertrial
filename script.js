@@ -403,13 +403,12 @@ document.addEventListener('DOMContentLoaded', () => {
             category: 'BRANDING',
             filterCategory: 'BRANDING',
             title: 'Brand Re-launch',
-            client: 'Apex Retail Group',
             year: '2024',
             deliverables: 'Visual Identity, Brand Guidelines, Packaging, Typography',
             description: 'Comprehensive brand revitalization engineered to re-establish market authority, unify multi-channel communication, and forge an emotional bond with modern consumers.',
             gallery: [
-                'https://images.unsplash.com/photo-1600132806370-bf17e65e942f?q=80&w=1200&auto=format&fit=crop',
-                'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1200&auto=format&fit=crop'
+                'https://images.unsplash.com/photo-1626785774573-4b799315345d?q=80&w=1200&auto=format&fit=crop',
+                'https://images.unsplash.com/photo-1600132806370-bf17e65e942f?q=80&w=1200&auto=format&fit=crop'
             ]
         },
         {
@@ -417,7 +416,6 @@ document.addEventListener('DOMContentLoaded', () => {
             category: 'WEB DEVELOPMENT',
             filterCategory: 'WEB DEVELOPMENT',
             title: 'E-Commerce App',
-            client: 'LuxeCart Global',
             year: '2024',
             deliverables: 'Custom Web Platform, Payment Gateway, High-Speed Performance',
             description: 'A bespoke, lightning-fast e-commerce experience designed for high conversion, frictionless checkout flows, and seamless real-time inventory synchronization.',
@@ -431,13 +429,12 @@ document.addEventListener('DOMContentLoaded', () => {
             category: 'ADS & PROMOTIONS',
             filterCategory: 'ADS & PROMOTIONS',
             title: 'Social Media Campaign',
-            client: 'Nova Pulse Media',
             year: '2024',
             deliverables: 'Omni-channel Ad Creatives, Audience Retargeting, High-ROI Funnels',
             description: 'Data-driven promotional campaign maximizing viral reach, multi-tier social ad strategies, and interactive motion assets that converted passive scrollers into loyal customers.',
             gallery: [
                 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=1200&auto=format&fit=crop',
-                'https://images.unsplash.com/photo-1557672172-298e090bd0f1?q=80&w=1200&auto=format&fit=crop'
+                'https://images.unsplash.com/photo-1557838923-2985c318be48?q=80&w=1200&auto=format&fit=crop'
             ]
         },
         {
@@ -445,13 +442,12 @@ document.addEventListener('DOMContentLoaded', () => {
             category: 'PHOTOSHOOTS',
             filterCategory: 'PHOTOSHOOTS',
             title: 'Corporate Photography',
-            client: 'Vanguard Industrial Corp',
             year: '2023',
             deliverables: 'Executive Portraits, Facility Visuals, Editorial Lookbook',
             description: 'High-end studio and location photoshoots capturing executive leadership, cutting-edge corporate infrastructure, and authentic brand storytelling.',
             gallery: [
-                'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=1200&auto=format&fit=crop',
-                'https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1200&auto=format&fit=crop'
+                'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=1200&auto=format&fit=crop',
+                'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=1200&auto=format&fit=crop'
             ]
         },
         {
@@ -459,7 +455,6 @@ document.addEventListener('DOMContentLoaded', () => {
             category: 'SOFTWARE DEV',
             filterCategory: 'SOFTWARE DEV',
             title: 'Custom CRM System',
-            client: 'Horizon Enterprise Suite',
             year: '2024',
             deliverables: 'Scalable Architecture, Real-time Analytics, Automated Workflows',
             description: 'An enterprise-grade Customer Relationship Management solution designed to eliminate operational bottlenecks, unify communications, and visualize customer pipelines.',
@@ -473,13 +468,12 @@ document.addEventListener('DOMContentLoaded', () => {
             category: 'QA TESTING',
             filterCategory: 'QA TESTING',
             title: 'Automated Testing Suite',
-            client: 'FinTech SecureLabs',
             year: '2023',
             deliverables: 'End-to-End Test Automation, Security Audits, CI/CD Integration',
             description: 'Rigorous automated QA framework ensuring bulletproof system security, sub-second response verification, and zero regression deployments for critical platforms.',
             gallery: [
-                'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1200&auto=format&fit=crop',
-                'https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=1200&auto=format&fit=crop'
+                'https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1200&auto=format&fit=crop',
+                'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1200&auto=format&fit=crop'
             ]
         },
         {
@@ -487,13 +481,12 @@ document.addEventListener('DOMContentLoaded', () => {
             category: 'PRODUCTION',
             filterCategory: 'PRODUCTION',
             title: 'Corporate Video',
-            client: 'Solaria Energies',
             year: '2024',
             deliverables: '4K Cinematic Film, Drone Cinematography, Sound Design',
             description: 'A cinematic brand film combining breathtaking drone visuals, inspiring client narratives, and meticulous sound engineering to communicate company impact.',
             gallery: [
-                'https://images.unsplash.com/photo-1536240478700-b869070f9279?q=80&w=1200&auto=format&fit=crop',
-                'https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?q=80&w=1200&auto=format&fit=crop'
+                'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?q=80&w=1200&auto=format&fit=crop',
+                'https://images.unsplash.com/photo-1536240478700-b869070f9279?q=80&w=1200&auto=format&fit=crop'
             ]
         },
         {
@@ -501,7 +494,6 @@ document.addEventListener('DOMContentLoaded', () => {
             category: 'DIGITAL MARKETING',
             filterCategory: 'DIGITAL MARKETING',
             title: 'SEO Optimization',
-            client: 'Kinetix Global Health',
             year: '2024',
             deliverables: 'Technical SEO, High-Intent Keyword Ranking, Link Building',
             description: 'Advanced search engine optimization and performance tuning that catapulted client domain authority, securing page-one search domination and exponential organic growth.',
@@ -519,18 +511,31 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!portfolioGrid) return;
         portfolioGrid.innerHTML = '';
 
-        projects.forEach(project => {
+        projects.forEach((project, index) => {
+            const bgImg = (project.gallery && project.gallery[0]) ? project.gallery[0] : '';
             const card = document.createElement('div');
-            card.className = 'portfolio-item-card';
+            // Make 1st and 4th card featured in Bento layout when displaying all projects
+            const isFeatured = (index === 0 || index === 3) && projects.length >= 6;
+            card.className = `portfolio-item-card ${isFeatured ? 'portfolio-card-featured' : ''}`;
             card.setAttribute('data-id', project.id);
+            
             card.innerHTML = `
-                <span class="portfolio-item-cat">${project.category}</span>
-                <h3 class="portfolio-item-title">${project.title}</h3>
-                <div class="portfolio-item-action">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <line x1="7" y1="17" x2="17" y2="7"></line>
-                        <polyline points="7 7 17 7 17 17"></polyline>
-                    </svg>
+                <div class="portfolio-item-bg" style="background-image: linear-gradient(180deg, rgba(18, 1, 15, 0.35) 0%, rgba(18, 1, 15, 0.94) 100%), url('${bgImg}')"></div>
+                <div class="portfolio-item-top">
+                    <span class="portfolio-item-cat">${project.category}</span>
+                </div>
+                <div class="portfolio-item-bottom">
+                    <h3 class="portfolio-item-title">${project.title}</h3>
+                    <div class="portfolio-item-meta">
+                        <span class="portfolio-item-deliverable">${project.deliverables ? project.deliverables.split(',')[0] : ''}</span>
+                        <div class="portfolio-action-btn">
+                            <span>View Project</span>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="7" y1="17" x2="17" y2="7"></line>
+                                <polyline points="7 7 17 7 17 17"></polyline>
+                            </svg>
+                        </div>
+                    </div>
                 </div>
             `;
 
@@ -560,17 +565,43 @@ document.addEventListener('DOMContentLoaded', () => {
 
     renderPortfolioCards(portfolioProjects);
 
-    // Filtering logic
+    // Infinite Marquee Filtering logic with click-to-pause & auto-resume
+    const marqueeTrack = document.getElementById('portfolio-marquee-track');
+    let marqueeResumeTimeout = null;
+
     filterPills.forEach(pill => {
         pill.addEventListener('click', (e) => {
-            filterPills.forEach(p => p.classList.remove('active'));
-            e.currentTarget.classList.add('active');
+            const selectedFilter = e.currentTarget.getAttribute('data-filter');
 
-            const filter = e.currentTarget.getAttribute('data-filter');
-            if (filter === 'all') {
+            // Sync active state across duplicated pills in infinite marquee
+            filterPills.forEach(p => {
+                if (p.getAttribute('data-filter') === selectedFilter) {
+                    p.classList.add('active');
+                } else {
+                    p.classList.remove('active');
+                }
+            });
+
+            // Pause marquee animation on click so user can explore category
+            if (marqueeTrack) {
+                marqueeTrack.classList.add('is-paused');
+                if (marqueeResumeTimeout) clearTimeout(marqueeResumeTimeout);
+
+                // Resume infinite marquee scrolling after 6.5s or instantly if 'all' is selected
+                if (selectedFilter === 'all') {
+                    marqueeTrack.classList.remove('is-paused');
+                } else {
+                    marqueeResumeTimeout = setTimeout(() => {
+                        marqueeTrack.classList.remove('is-paused');
+                    }, 6500);
+                }
+            }
+
+            // Filter portfolio cards grid
+            if (selectedFilter === 'all') {
                 renderPortfolioCards(portfolioProjects);
             } else {
-                const filtered = portfolioProjects.filter(p => p.filterCategory === filter);
+                const filtered = portfolioProjects.filter(p => p.filterCategory === selectedFilter);
                 renderPortfolioCards(filtered);
             }
         });
@@ -624,10 +655,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 <h1 class="modal-case-title">${project.title}</h1>
                 
                 <div class="modal-meta-grid">
-                    <div class="modal-meta-item">
-                        <span class="modal-meta-label">Client</span>
-                        <span class="modal-meta-value">${project.client}</span>
-                    </div>
                     <div class="modal-meta-item">
                         <span class="modal-meta-label">Timeline</span>
                         <span class="modal-meta-value">${project.year}</span>
