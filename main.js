@@ -851,7 +851,7 @@ function initTeam3DSlider() {
       if (!isInteracting) {
         nextCard();
       }
-    }, 2400);
+    }, 1400);
   }
 
   function stopAutoPlay() {
@@ -873,12 +873,12 @@ function initTeam3DSlider() {
     }, 1000);
   }
 
-  // Viewport Intersection Observer
+  // Viewport Intersection Observer — only start if not already playing
   const teamSection = document.getElementById('our-team');
   if (teamSection && typeof IntersectionObserver !== 'undefined') {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
-        if (entry.isIntersecting) {
+        if (entry.isIntersecting && !autoPlayTimer) {
           isInteracting = false;
           startAutoPlay();
         }
@@ -895,7 +895,9 @@ function initTeam3DSlider() {
   });
 
   viewport.addEventListener('mouseleave', () => {
-    handleUserInteraction();
+    // Resume autoplay immediately on mouse leave — no interaction penalty
+    isInteracting = false;
+    startAutoPlay();
   });
 
   if (prevBtn) {
@@ -928,7 +930,7 @@ function initTeam3DSlider() {
   let isDragging = false;
 
   function onDragStart(e) {
-    handleUserInteraction();
+    // Only mark dragging — don't pause autoplay until we know it's a real swipe
     isDragging = true;
     startX = e.touches ? e.touches[0].clientX : e.clientX;
     currentX = startX;
@@ -945,6 +947,8 @@ function initTeam3DSlider() {
     const diffX = currentX - startX;
 
     if (Math.abs(diffX) > 40) {
+      // Real swipe — pause then resume
+      handleUserInteraction();
       if (diffX < 0) nextCard();
       else prevCard();
     }
