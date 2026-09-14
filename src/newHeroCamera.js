@@ -508,28 +508,59 @@ export function createNewHeroCamera(canvasElement) {
   silverRimLight.position.set(-3.5, 3.5, -2.5);
   scene.add(silverRimLight);
 
-  // 7. STRICT CLICK & DRAG ONLY INTERACTION
+  // 7. TOUCH & POINTER INTERACTION (WITH SCROLL-SAFE TOUCH DETECTION)
   let targetRotY = defaultRotY;
   let targetRotX = defaultRotX;
   
   let isDragging = false;
+  let isTouchGesture = false;
+  let hasDecidedDirection = false;
+  let startX = 0;
+  let startY = 0;
   let previousX = 0;
   let previousY = 0;
 
   canvasElement.style.cursor = 'grab';
 
   function onPointerDown(e) {
-    isDragging = true;
-    previousX = e.touches ? e.touches[0].clientX : e.clientX;
-    previousY = e.touches ? e.touches[0].clientY : e.clientY;
-    canvasElement.style.cursor = 'grabbing';
+    isTouchGesture = !!e.touches;
+    startX = e.touches ? e.touches[0].clientX : e.clientX;
+    startY = e.touches ? e.touches[0].clientY : e.clientY;
+    previousX = startX;
+    previousY = startY;
+
+    if (!isTouchGesture) {
+      isDragging = true;
+      canvasElement.style.cursor = 'grabbing';
+    } else {
+      isDragging = false;
+      hasDecidedDirection = false;
+    }
   }
 
   function onPointerMove(e) {
-    if (!isDragging) return;
-
     const currentX = e.touches ? e.touches[0].clientX : e.clientX;
     const currentY = e.touches ? e.touches[0].clientY : e.clientY;
+
+    if (isTouchGesture) {
+      if (!hasDecidedDirection) {
+        const diffX = Math.abs(currentX - startX);
+        const diffY = Math.abs(currentY - startY);
+
+        if (diffY > diffX && diffY > 6) {
+          // Vertical page scroll — do not hijack with 3D rotation
+          isDragging = false;
+          hasDecidedDirection = true;
+          return;
+        } else if (diffX > diffY && diffX > 6) {
+          // Intentional horizontal 3D camera drag
+          isDragging = true;
+          hasDecidedDirection = true;
+        }
+      }
+    }
+
+    if (!isDragging) return;
 
     const deltaX = currentX - previousX;
     const deltaY = currentY - previousY;
@@ -543,6 +574,8 @@ export function createNewHeroCamera(canvasElement) {
 
   function onPointerUp() {
     isDragging = false;
+    isTouchGesture = false;
+    hasDecidedDirection = false;
     canvasElement.style.cursor = 'grab';
   }
 
@@ -563,16 +596,21 @@ export function createNewHeroCamera(canvasElement) {
 
     camera.aspect = width / height;
 
-    if (window.innerWidth < 768) {
-      camera.fov = 34;
-      camera.position.z = 6.8;
-      cameraGroup.position.set(0, -0.1, 0);
-      cameraGroup.scale.setScalar(0.78);
-    } else if (window.innerWidth < 1024) {
+    if (window.innerWidth < 480) {
       camera.fov = 30;
-      camera.position.z = 6.4;
-      cameraGroup.position.set(0.15, -0.05, 0);
+      camera.position.z = 6.0;
+      cameraGroup.position.set(0, -0.04, 0);
+      cameraGroup.scale.setScalar(0.84);
+    } else if (window.innerWidth < 768) {
+      camera.fov = 29;
+      camera.position.z = 6.1;
+      cameraGroup.position.set(0, -0.04, 0);
       cameraGroup.scale.setScalar(0.88);
+    } else if (window.innerWidth <= 1024) {
+      camera.fov = 28;
+      camera.position.z = 6.2;
+      cameraGroup.position.set(0, -0.05, 0);
+      cameraGroup.scale.setScalar(0.92);
     } else {
       camera.fov = 28;
       camera.position.z = 6.4;
@@ -583,6 +621,11 @@ export function createNewHeroCamera(canvasElement) {
     camera.updateProjectionMatrix();
     renderer.setSize(width, height, false);
   }
+
+  const resizeObserver = new ResizeObserver(() => {
+    resize();
+  });
+  resizeObserver.observe(canvasElement);
 
   window.addEventListener('resize', resize);
   resize();
@@ -599,6 +642,12 @@ export function createNewHeroCamera(canvasElement) {
     // Smooth Lerped Drag Rotation
     cameraGroup.rotation.y += (targetRotY - cameraGroup.rotation.y) * 0.1;
     cameraGroup.rotation.x += (targetRotX - cameraGroup.rotation.x) * 0.1;
+
+    // Gently restore default camera orientation when scrolling up into hero section
+    if (targetExplode < 0.15 && !isDragging) {
+      targetRotX += (defaultRotX - targetRotX) * 0.05;
+      targetRotY += (defaultRotY - targetRotY) * 0.05;
+    }
 
     // Smooth Lerped Optical Split Progression
     currentExplode += (targetExplode - currentExplode) * 0.10;
@@ -624,6 +673,7 @@ export function createNewHeroCamera(canvasElement) {
     },
     destroy() {
       cancelAnimationFrame(animationFrameId);
+      resizeObserver.disconnect();
       canvasElement.removeEventListener('mousedown', onPointerDown);
       canvasElement.removeEventListener('touchstart', onPointerDown);
       window.removeEventListener('mousemove', onPointerMove);

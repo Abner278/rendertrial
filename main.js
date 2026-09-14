@@ -588,24 +588,51 @@ function setupIntroVideo() {
   const introVideo = document.getElementById('intro-video');
   const introOverlay = document.getElementById('intro-video-overlay');
 
-  if (introVideo && introOverlay) {
-    const handleVideoEnd = () => {
-      introOverlay.style.transition = 'opacity 0.6s ease';
-      introOverlay.style.opacity = '0';
+  if (introOverlay) {
+    let finished = false;
+
+    // Ensure scrolling is locked while intro splash is active
+    document.documentElement.classList.add('splash-active');
+    document.body.classList.add('splash-active');
+
+    const finishIntro = () => {
+      if (finished) return;
+      finished = true;
+
+      introOverlay.classList.add('fade-out');
+
+      // Unlock scrolling seamlessly
+      document.documentElement.classList.remove('splash-active');
+      document.body.classList.remove('splash-active');
+
+      if (typeof window.startTeamSliderAutoPlay === 'function') {
+        window.startTeamSliderAutoPlay();
+      }
+
       setTimeout(() => {
         introOverlay.style.display = 'none';
       }, 600);
     };
 
-    introVideo.addEventListener('ended', handleVideoEnd);
-
-    // Fallback if video fails to load or play
-    introVideo.addEventListener('error', handleVideoEnd);
-    setTimeout(() => {
-      if (introOverlay.style.display !== 'none') {
-        handleVideoEnd();
+    if (introVideo) {
+      const playPromise = introVideo.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
+          // If browser blocks unmuted autoplay, resolve gracefully
+          setTimeout(finishIntro, 1200);
+        });
       }
-    }, 8000);
+
+      introVideo.addEventListener('ended', finishIntro);
+      introVideo.addEventListener('error', finishIntro);
+
+      // Fallback if video is long or fails to emit ended event
+      setTimeout(() => {
+        finishIntro();
+      }, 6500);
+    } else {
+      setTimeout(finishIntro, 2000);
+    }
   }
 }
 
@@ -613,6 +640,7 @@ function setupIntroVideo() {
    9. HERO → WHO WE ARE SCROLL-DRIVEN CAMERA SPLIT & REASSEMBLY
 ---------------------------------------------------- */
 function initHeroScrollTransition() {
+  const heroSec = document.getElementById('hero');
   const whoWeAreSec = document.getElementById('who-we-are');
   if (!whoWeAreSec) return;
 
@@ -622,13 +650,12 @@ function initHeroScrollTransition() {
   let ticking = false;
 
   function updateScrollTransition() {
-    const rect = whoWeAreSec.getBoundingClientRect();
-    const vh = window.innerHeight;
-
-    // 0.0 when top of #who-we-are is at bottom of viewport (Hero fully assembled)
-    // 1.0 when top of #who-we-are reaches upper viewport (Lens half fixed in Who We Are)
-    const rawProgress = (vh - rect.top) / (vh * 0.85);
-    const progress = Math.min(1.0, Math.max(0.0, rawProgress));
+    const scrollY = Math.max(0, window.scrollY || window.pageYOffset || 0);
+    
+    // Smooth progress calculation symmetric in both scroll directions
+    const heroHeight = heroSec ? heroSec.offsetHeight : window.innerHeight;
+    const targetDistance = Math.max(200, heroHeight * 0.75);
+    const progress = Math.min(1.0, Math.max(0.0, scrollY / targetDistance));
 
     // Detach lens forward on Hero camera
     if (heroCameraInstance && typeof heroCameraInstance.setExplodeProgress === 'function') {
@@ -821,11 +848,12 @@ function initTeam3DSlider() {
   // --- AUTO-PLAY ENGINE (Immediate Start, 1s Pause on Click) ---
   function startAutoPlay() {
     stopAutoPlay();
+    isInteracting = false;
     autoPlayTimer = setInterval(() => {
       if (!isInteracting) {
         nextCard();
       }
-    }, 3000);
+    }, 2400);
   }
 
   function stopAutoPlay() {
@@ -853,10 +881,11 @@ function initTeam3DSlider() {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
+          isInteracting = false;
           startAutoPlay();
         }
       });
-    }, { threshold: 0.1 });
+    }, { threshold: 0.05 });
 
     observer.observe(teamSection);
   }
@@ -951,7 +980,13 @@ function initTeam3DSlider() {
   updateSlider();
 
   // START AUTOPLAY IMMEDIATELY ON MOUNT
+  isInteracting = false;
   startAutoPlay();
+
+  window.startTeamSliderAutoPlay = () => {
+    isInteracting = false;
+    startAutoPlay();
+  };
 }
 
 /* ----------------------------------------------------
