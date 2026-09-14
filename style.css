@@ -55,7 +55,7 @@
 
 html {
   scroll-behavior: smooth;
-  background-color: var(--bg-primary);
+  background-color: #0F0F13;
   color: var(--text-primary);
   font-family: var(--font-body);
   overflow-x: hidden;
@@ -69,7 +69,7 @@ body {
   width: 100%;
   max-width: 100%;
   position: relative;
-  background-color: var(--bg-primary);
+  background-color: #0F0F13;
   overflow-x: hidden;
 }
 
@@ -2792,12 +2792,12 @@ body.splash-active::-webkit-scrollbar {
 }
 
 .camera-scroll-reveal {
-  opacity: 0;
-  transform: translateY(35px) scale(0.98);
-  filter: blur(6px);
-  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.85s cubic-bezier(0.16, 1, 0.3, 1),
-              filter 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  filter: blur(0px);
+  transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 0.45s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity, transform, filter;
 }
 

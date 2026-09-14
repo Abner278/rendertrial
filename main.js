@@ -707,20 +707,18 @@ function initContinuousScrollEffect() {
       const rawProgress = (start - rect.top) / (start - end);
       const progress = Math.min(1.0, Math.max(0.0, rawProgress));
 
-      const scale = 0.93 + progress * 0.07;
-      const translateY = (1.0 - progress) * 35;
-      const blurVal = (1.0 - progress) * 6;
-      const opacityVal = 0.25 + progress * 0.75;
+      const scale = 0.98 + progress * 0.02;
+      const translateY = (1.0 - progress) * 10;
 
       const container = sec.querySelector(
         '.about-editorial-container, .team-editorial-container, .team-slider-wrapper, .services-editorial-container, .portfolio-editorial-container, .reviews-editorial-container, .contact-header-centered, .location-card-container'
       ) || sec;
 
       container.style.transform = `translate3d(0, ${translateY}px, 0) scale(${scale})`;
-      container.style.filter = `blur(${blurVal.toFixed(1)}px)`;
-      container.style.opacity = opacityVal.toFixed(2);
+      container.style.filter = 'none';
+      container.style.opacity = '1';
       container.style.transition = 'none';
-      container.style.willChange = 'transform, filter, opacity';
+      container.style.willChange = 'transform';
     });
 
     ticking = false;
